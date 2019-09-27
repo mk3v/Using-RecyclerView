@@ -1,34 +1,35 @@
 package com.example.sampleapp1.UI;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.example.sampleapp1.Data.IRepository;
+import com.example.sampleapp1.Data.Image;
 import com.example.sampleapp1.R;
+
+import java.util.List;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 
-    IRepository mRepository;
-    Context mContext;
 
-    public GalleryAdapter(IRepository repository, Context context) {
-        mRepository = repository;
+    Context mContext;
+    List<Image> mImageList;
+
+    public GalleryAdapter(Context context, List<Image> imageList) {
+
+        mImageList = imageList;
         mContext = context;
+    }
+
+    public void updageImages(List<Image> images) {
+        mImageList = images;
     }
 
     @NonNull
@@ -41,13 +42,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String url =  mRepository.getImages().get(position).url;
+       String url = mImageList.get(position).url;
         Glide.with(mContext).load(url).placeholder(R.mipmap.ic_placeholder_image).into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return mRepository.getImages().size();
+        if(mImageList == null)
+            return 0;
+        return mImageList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
