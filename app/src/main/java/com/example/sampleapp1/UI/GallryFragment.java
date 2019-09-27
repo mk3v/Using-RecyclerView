@@ -4,8 +4,10 @@ package com.example.sampleapp1.UI;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,10 +51,10 @@ public class GallryFragment extends Fragment {
 
     private void initializeRecyclerView() {
         mGalleryRecyclerView = mRootView.findViewById(R.id.galleryRecyclerView);
-        GalleryAdapter galleryAdapter = new GalleryAdapter(new Repository());
+        GalleryAdapter galleryAdapter = new GalleryAdapter(new Repository(), getContext());
         mGalleryRecyclerView.setAdapter(galleryAdapter);
-        mGalleryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+     //   mGalleryRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+mGalleryRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
     }
 
